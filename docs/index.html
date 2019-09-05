@@ -9,8 +9,8 @@
     <main>
       <section class="text-submission">
         <h2 tabindex="0">Word <span>Watch</span> 👀</h2>
-        <textarea placeholder="Paste text here"></textarea>
-        <button>Break down</button>
+        <textarea placeholder="Paste text here" id="wordsToSubmit"></textarea>
+        <button onclick="postWords(document.getElementById('wordsToSubmit').value)">Break down</button>
       </section>
 
       <section class="word-data" tabindex="0">
@@ -25,32 +25,35 @@
 </html>
 <script>
 
-
+function topWord(){
 fetch("https://wordwatch-api.herokuapp.com/api/v1/top_word")
 .then(response => {
    return response.json()})
  .then(function(data) {
-   // Create and append the li's to the ul
    let topWord = Object.keys(data.word)[0]
    let topWordCount = Object.values(data.word)[0]
    let wordArea = document.getElementById("top-word");
    wordArea.innerHTML = `Top word: ${topWord}, count: ${topWordCount}`
    })
+ }
+
+ topWord();
+
+   function postWords(words){
+     new_words = words.replace(/\s+/, ' ').split(' ')
+     new_words.forEach(function(word) {
+       fetch("https://wordwatch-api.herokuapp.com/api/v1/words",{
+         method: 'POST',
+         headers: {
+             'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({ "word": { "value": word } })
+       } )
+     });
+      topWord();
+     };
 
 
-//  fetch(url)
-// .then((resp) => resp.json()) // Transform the data into json
-// .then(function(data) {
-//   // Create and append the li's to the ul
-//   })
-// })
 
-//  function createNode(element) {
-//   return document.createElement(element); // Create the type of element you pass in the parameters
-// }
-//
-// function append(parent, el) {
-//   return parent.appendChild(el); // Append the second parameter(element) to the first one
-// }
 
 </script>
