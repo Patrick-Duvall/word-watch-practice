@@ -14,7 +14,7 @@
       </section>
 
       <section class="word-data" tabindex="0">
-        <article class="top-word">
+        <article id="top-word">
           <h3>Top word from Word Watch API: </h3>
         </article>
         <article class="word-count" tabindex="0">
@@ -23,4 +23,33 @@
     </main>
   </body>
 </html>
+<script>
 
+
+fetch("https://wordwatch-api.herokuapp.com/api/v1/top_word")
+.then(response => {
+   return response.json()})
+ .then(function(data) {
+   // Create and append the li's to the ul
+   let topWord = data.word;
+   let wordArea = document.getElementById("top-word");
+   wordArea.innerHTML = `${topWord}`
+   })
+
+
+//  fetch(url)
+// .then((resp) => resp.json()) // Transform the data into json
+// .then(function(data) {
+//   // Create and append the li's to the ul
+//   })
+// })
+
+//  function createNode(element) {
+//   return document.createElement(element); // Create the type of element you pass in the parameters
+// }
+//
+// function append(parent, el) {
+//   return parent.appendChild(el); // Append the second parameter(element) to the first one
+// }
+
+</script>
