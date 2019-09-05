@@ -31,9 +31,10 @@ fetch("https://wordwatch-api.herokuapp.com/api/v1/top_word")
    return response.json()})
  .then(function(data) {
    // Create and append the li's to the ul
-   let topWord = data.word;
+   let topWord = Object.keys(data.word)[0]
+   let topWordCount = Object.values(data.word)[0]
    let wordArea = document.getElementById("top-word");
-   wordArea.innerHTML = `${topWord}`
+   wordArea.innerHTML = `Top word: ${topWord}, count: ${topWordCount}`
    })
 
 
